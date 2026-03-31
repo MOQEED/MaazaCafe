@@ -1,0 +1,125 @@
+.cash-container {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  padding: 40px 20px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #d4a574 0%, #b8956a 50%, #8b7355 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.cash-container h2 {
+  text-align: center;
+  font-size: 32px;
+  color: #fff;
+  margin-bottom: 30px;
+}
+
+/* FORM */
+.cash-form {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.cash-form input {
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  width: 180px;
+}
+
+.cash-form button {
+  padding: 12px 20px;
+  background: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* CARDS */
+.cash-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+}
+
+/* CARD */
+.cash-card {
+  width: 360px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  border: 4px solid #10b981;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  transition: 0.3s;
+}
+
+.cash-card:hover {
+  transform: translateY(-5px);
+}
+
+/* HEADER */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.day-total {
+  font-weight: bold;
+  color: #10b981;
+  font-size: 18px;
+}
+
+/* PRINT BUTTON */
+.print-btn {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: #6366f1;
+  color: white;
+  padding: 8px;
+}
+
+td {
+  text-align: center;
+  padding: 8px;
+}
+
+/* ACTION BUTTONS */
+.edit-btn {
+  background: #f59e0b;
+  border: none;
+  padding: 5px 8px;
+  margin-right: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background: #ef4444;
+  border: none;
+  padding: 5px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}

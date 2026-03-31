@@ -1,0 +1,223 @@
+.admin-container {
+  max-width: 800px;
+  margin: 40px auto;
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.admin-container h2 {
+  color: #1f2937;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 30px 0;
+  text-align: center;
+}
+
+.form-section {
+  background: #f9fafb;
+  padding: 24px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  border: 2px solid #e5e7eb;
+}
+
+.admin-container input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.admin-container input::placeholder {
+  color: #9ca3af;
+}
+
+.admin-container input:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.admin-container input:hover:not(:focus) {
+  border-color: #818cf8;
+}
+
+/* Image Upload Section */
+.image-upload-section {
+  margin: 20px 0;
+  padding: 16px;
+  background: white;
+  border-radius: 6px;
+  border: 2px dashed #6366f1;
+}
+
+.image-label {
+  display: block;
+  color: #6366f1;
+  font-weight: 600;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.file-input {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.file-input::file-selector-button {
+  background: #6366f1;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.file-input::file-selector-button:hover {
+  background: #4f46e5;
+}
+
+/* Image Preview */
+.image-preview-container {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.preview-text {
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.image-preview {
+  max-width: 150px;
+  max-height: 150px;
+  border-radius: 8px;
+  border: 2px solid #6366f1;
+  object-fit: cover;
+}
+
+/* Table Image Thumbnail */
+.table-image-thumb {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid #e5e7eb;
+}
+
+.no-image {
+  color: #9ca3af;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Credentials Section */
+.credentials-section {
+  background: #f9fafb;
+  padding: 24px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  border: 2px solid #e5e7eb;
+}
+
+.credentials-section h3 {
+  color: #1f2937;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+}
+
+.save-credentials-btn {
+  width: 100%;
+  padding: 12px 20px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  margin-top: 12px;
+}
+
+.save-credentials-btn:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.4);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+thead {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+}
+
+th {
+  padding: 16px;
+  border: none;
+  color: white;
+  font-weight: 600;
+  text-align: left;
+}
+
+td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+tr:hover {
+  background: #f9fafb;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.action-btn {
+  padding: 8px 14px !important;
+  margin-right: 8px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.edit-btn {
+  background: #818cf8;
+  color: white;
+}
+
+.edit-btn:hover {
+  background: #6366f1;
+}
+
+.delete-btn {
+  background: #ef4444;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+}
