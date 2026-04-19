@@ -1,18 +1,21 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useState, useEffect } from "react";   // ✅ ADD THIS
+import { useState, useEffect } from "react";
 
 import Login from "./components/Login";
 import Menu from "./components/Menu";
 import Cash from "./components/Cash";
 import Admin from "./components/Admin";
 import Reports from "./components/Reports";
+import Hisaab from "./components/Hisaab";
+import OwnerGate from "./components/OwnerGate";
 import Navbar from "./components/Navbar";
+import { ensureAuthDefaults } from "./utils/authDefaults";
 
 export default function App() {
   const [isAuth, setIsAuth] = useState(false);
 
-  // ✅ LOAD AUTH STATE FROM LOCALSTORAGE
   useEffect(() => {
+    ensureAuthDefaults();
     const auth = localStorage.getItem("isAuth");
     if (auth === "true") {
       setIsAuth(true);
@@ -36,11 +39,39 @@ export default function App() {
         />
         <Route
           path="/admin"
-          element={isAuth ? <Admin /> : <Navigate to="/" />}
+          element={
+            isAuth ? (
+              <OwnerGate>
+                <Admin />
+              </OwnerGate>
+            ) : (
+              <Navigate to="/" />
+            )
+          }
         />
         <Route
           path="/reports"
-          element={isAuth ? <Reports /> : <Navigate to="/" />}
+          element={
+            isAuth ? (
+              <OwnerGate>
+                <Reports />
+              </OwnerGate>
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+        <Route
+          path="/hisaab"
+          element={
+            isAuth ? (
+              <OwnerGate>
+                <Hisaab />
+              </OwnerGate>
+            ) : (
+              <Navigate to="/" />
+            )
+          }
         />
       </Routes>
     </BrowserRouter>

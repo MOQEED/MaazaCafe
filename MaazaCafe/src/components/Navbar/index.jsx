@@ -5,10 +5,11 @@ export default function Navbar({ setIsAuth }) {
   const nav = useNavigate();
 
   const logout = () => {
-  localStorage.removeItem("isAuth");   // ✅ ADD THIS
-  setIsAuth(false);
-  nav("/");
-};
+    localStorage.removeItem("isAuth");
+    localStorage.removeItem("ownerAuth");
+    setIsAuth(false);
+    nav("/");
+  };
   return (
     <div className="navbar">
       <img
@@ -20,6 +21,7 @@ export default function Navbar({ setIsAuth }) {
       <Link to="/cash">Cash</Link>
       <Link to="/admin">Admin</Link>
       <Link to="/reports">Reports</Link>
+      <Link to="/hisaab">Hisaab</Link>
       <button onClick={logout}>Logout</button>
     </div>
   );

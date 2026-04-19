@@ -226,11 +226,15 @@
   padding: 16px 24px;
   background: #f9fafb;
   border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
 }
 
 .print-btn {
   padding: 10px 20px;
-  background: #6366f1;
+  background: #c959a0;
   color: white;
   border: none;
   border-radius: 6px;
@@ -238,10 +242,29 @@
   font-weight: 600;
   font-size: 14px;
   transition: all 0.2s ease;
+  width: max-content;
 }
 
 .print-btn:hover {
   background: #4f46e5;
+  transform: translateY(-1px);
+}
+
+.delete-day-btn {
+  padding: 10px 20px;
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 2px solid #fecaca;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.delete-day-btn:hover {
+  background: #fee2e2;
+  border-color: #f87171;
   transform: translateY(-1px);
 }
 

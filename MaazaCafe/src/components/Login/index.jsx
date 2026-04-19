@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import './index.css'
+import { ensureAuthDefaults } from "../../utils/authDefaults";
+import "./index.css";
 
 export default function Login({ setIsAuth }) {
   const [u, setU] = useState("");
@@ -9,6 +10,7 @@ export default function Login({ setIsAuth }) {
   const nav = useNavigate();
 
   const login = () => {
+    ensureAuthDefaults();
     const adminUser = localStorage.getItem("adminUser");
     const adminPass = localStorage.getItem("adminPass");
 

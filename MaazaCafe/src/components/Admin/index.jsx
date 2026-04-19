@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import './index.css'
 
 export default function Admin() {
@@ -10,16 +10,10 @@ export default function Admin() {
     JSON.parse(localStorage.getItem("menu")) || []
   );
 
-  useEffect(() => {
-  if (!localStorage.getItem("adminUser")) {
-    localStorage.setItem("adminUser", "Moqeed");
-    localStorage.setItem("adminPass", "Moqeed@786");
-  }
-}, []);
-
-  // Admin credentials
   const [userid, setUserid] = useState(localStorage.getItem("adminUser") || "");
   const [password, setPassword] = useState(localStorage.getItem("adminPass") || "");
+  const [ownerUserid, setOwnerUserid] = useState(localStorage.getItem("ownerUser") || "");
+  const [ownerPassword, setOwnerPassword] = useState(localStorage.getItem("ownerPass") || "");
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -85,16 +79,26 @@ export default function Admin() {
     if (!userid || !password) return alert("Please enter both userid and password");
     localStorage.setItem("adminUser", userid);
     localStorage.setItem("adminPass", password);
-    alert("Credentials saved successfully");
+    alert("Main login credentials saved successfully");
+  };
+
+  const saveOwnerCredentials = () => {
+    if (!ownerUserid || !ownerPassword) {
+      return alert("Please enter both owner user ID and password");
+    }
+    localStorage.setItem("ownerUser", ownerUserid);
+    localStorage.setItem("ownerPass", ownerPassword);
+    localStorage.removeItem("ownerAuth");
+    alert("Owner credentials saved. Owner will need to unlock again on Admin, Reports, or Hisaab.");
   };
 
   return (
     <div className="admin-container">
       <h2>Admin Page</h2>
 
-      {/* Credentials Section */}
       <div className="credentials-section">
-        <h3>Set User Credentials</h3>
+        <h3>Main app login (Menu / Cash)</h3>
+        <p className="credentials-note">Used on the home login screen to access the app.</p>
         <input 
           placeholder="User ID" 
           value={userid} 
@@ -106,7 +110,24 @@ export default function Admin() {
           value={password} 
           onChange={(e) => setPassword(e.target.value)} 
         />
-        <button onClick={saveCredentials} className="save-credentials-btn">Save Credentials</button>
+        <button onClick={saveCredentials} className="save-credentials-btn">Save main login</button>
+      </div>
+
+      <div className="credentials-section owner-credentials">
+        <h3>Owner&apos;s login (Admin, Reports, Hisaab)</h3>
+        <p className="credentials-note">Separate from main login. Unlock required after app logout or when the owner password changes.</p>
+        <input 
+          placeholder="Owner user ID" 
+          value={ownerUserid} 
+          onChange={(e) => setOwnerUserid(e.target.value)} 
+        />
+        <input 
+          type="password" 
+          placeholder="Owner password" 
+          value={ownerPassword} 
+          onChange={(e) => setOwnerPassword(e.target.value)} 
+        />
+        <button onClick={saveOwnerCredentials} className="save-credentials-btn owner-save">Save owner login</button>
       </div>
 
       <div className="form-section">

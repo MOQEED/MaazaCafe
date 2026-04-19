@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { printContent } from "../../utils/pdf";
-import { getData } from "../../utils/storage";
+import { getData, saveData } from "../../utils/storage";
+import { billDayKey } from "../../utils/authDefaults";
 import * as XLSX from "xlsx";
 import "./index.css";
 
@@ -12,9 +13,24 @@ export default function Reports() {
     setBills(getData("bills") || []);
   }, []);
 
+  const deleteBillsForDate = (dateKey) => {
+    if (
+      !window.confirm(
+        `Delete all bills for ${dateKey}? This removes that day's sales data and cannot be undone.`
+      )
+    ) {
+      return;
+    }
+    const all = getData("bills") || [];
+    const next = all.filter((bill) => billDayKey(bill.date) !== dateKey);
+    saveData("bills", next);
+    setBills(next);
+  };
+
   // 📅 GROUP BY DATE
   const grouped = bills.reduce((acc, bill) => {
-    const date = bill.date.split(",")[0];
+    const date = billDayKey(bill.date);
+    if (!date) return acc;
 
     if (!acc[date]) acc[date] = [];
     acc[date].push(bill);
@@ -172,8 +188,15 @@ export default function Reports() {
                 </div>
 
                 <div className="day-actions">
-                  <button onClick={handlePrint} className="print-btn">
+                  <button type="button" onClick={handlePrint} className="print-btn">
                     🖨 Print Report
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => deleteBillsForDate(date)}
+                    className="delete-day-btn"
+                  >
+                    🗑 Delete
                   </button>
                 </div>
 
