@@ -204,6 +204,44 @@ This repository includes a `render.yaml` configuration for easy deployment on Re
 - First deployment may take a few minutes
 - Free tier has usage limits; upgrade for production
 
+### Deploy to Railway
+
+This repository includes `railway.toml` files for backend and frontend deployment on Railway.
+
+#### Steps:
+
+1. **Push to GitHub**: Ensure your code is pushed to `https://github.com/MOQEED/MaazaCafe.git`
+
+2. **Create Railway Account**: Sign up at https://railway.app
+
+3. **Connect Repository**:
+   - Go to Dashboard > New Project > Deploy from GitHub repo
+   - Select `MOQEED/MaazaCafe`
+
+4. **Deploy Services**:
+   - Railway will detect multiple services (backend and frontend)
+   - Or manually create two services:
+     - Backend: Point to `backend/` folder
+     - Frontend: Point to `MaazaCafe/` folder
+
+5. **Configure Environment Variables**:
+   - Backend service:
+     - `MONGO_URL`: Your MongoDB Atlas connection string
+     - `DATABASE_NAME`: `maaza_cafe`
+     - `SECRET_KEY`: A secure random string
+   - Frontend service:
+     - `REACT_APP_BACKEND_URL`: The Railway URL of your backend service
+
+6. **Deploy**: Railway will build and deploy automatically
+
+7. **Access Your App**:
+   - Frontend: The Railway-generated URL
+   - Backend API: The backend Railway URL
+
+#### Notes:
+- Update `REACT_APP_BACKEND_URL` in frontend service with the actual backend URL
+- Railway provides a free tier for testing
+
 ### Alternative: Deploy Separately
 
 - **Backend**: Deploy FastAPI on Render, Railway, or Fly.io

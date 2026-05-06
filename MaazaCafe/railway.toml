@@ -1,0 +1,14 @@
+[build]
+builder = "NIXPACKS"
+
+[deploy]
+startCommand = "npx serve -s dist -l $PORT"
+healthcheckPath = "/"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
+
+[build.env]
+NODE_VERSION = "18"
+
+[env]
+REACT_APP_BACKEND_URL = "https://your-backend-service.railway.app"  # Replace with actual backend URL
