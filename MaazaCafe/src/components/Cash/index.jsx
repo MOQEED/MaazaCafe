@@ -1,17 +1,29 @@
 import { useState, useEffect } from "react";
 import { printContent } from "../../utils/pdf";
 import { getData, saveData } from "../../utils/storage";
+import { cashService } from "../../services/cash";
 import "./index.css";
 
 export default function Cash() {
   // ✅ LOAD DATA SAFELY (NO REFRESH LOSS)
-  const [data, setData] = useState(() => {
-    return getData("cash") || [];
-  });
+  const [data, setData] = useState([]);
 
   const [item, setItem] = useState("");
   const [price, setPrice] = useState("");
   const [qty, setQty] = useState("");
+
+  useEffect(() => {
+    const loadCash = async () => {
+      try {
+        const entries = await cashService.getCashEntries();
+        setData(entries);
+      } catch (error) {
+        setData(getData("cash") || []);
+      }
+    };
+
+    loadCash();
+  }, []);
 
   // ✅ SAVE DATA SAFELY
   useEffect(() => {
@@ -19,13 +31,12 @@ export default function Cash() {
   }, [data]);
 
   // ➕ ADD ITEM
-  const addItem = () => {
+  const addItem = async () => {
     if (!item || !price || !qty) return;
 
     const today = new Date().toLocaleDateString();
 
     const newEntry = {
-      id: Date.now(),
       item,
       price: Number(price),
       qty: Number(qty),
@@ -33,7 +44,15 @@ export default function Cash() {
       date: today,
     };
 
-    setData([...data, newEntry]);
+    try {
+      const created = await cashService.createCashEntry(newEntry);
+      setData([...data, { ...created, id: created.id || Date.now() }]);
+    } catch (error) {
+      setData([
+        ...data,
+        { ...newEntry, id: Date.now() },
+      ]);
+    }
 
     setItem("");
     setPrice("");
@@ -41,7 +60,12 @@ export default function Cash() {
   };
 
   // ❌ DELETE
-  const deleteItem = (id) => {
+  const deleteItem = async (id) => {
+    try {
+      await cashService.deleteCashEntry(id);
+    } catch (error) {
+      console.error(error);
+    }
     setData(data.filter((d) => d.id !== id));
   };
 

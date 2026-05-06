@@ -1,15 +1,30 @@
 import { useState, useEffect } from "react";
 import { printContent } from "../../utils/pdf";
 import { getData, saveData } from "../../utils/storage";
+import { menuService } from "../../services/menu";
+import { billService } from "../../services/bills";
 import "./index.css";
 
 const UNSPLASH_API_KEY = "YOUR_UNSPLASH_API_KEY"; // Get free key from unsplash.com/developers
 
 export default function Menu() {
-  const [items, setItems] = useState(getData("menu"));
+  const [items, setItems] = useState([]);
   const [billNo, setBillNo] = useState(getData("billNo") || 1);
   const [itemImages, setItemImages] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    const loadMenu = async () => {
+      try {
+        const itemsFromApi = await menuService.getMenuItems();
+        setItems(itemsFromApi.map((item) => ({ ...item, qty: 0 })));
+      } catch (error) {
+        setItems(getData("menu") || []);
+      }
+    };
+
+    loadMenu();
+  }, []);
 
   // Fetch images from Unsplash only if item doesn't have an image
   useEffect(() => {
@@ -54,8 +69,19 @@ export default function Menu() {
     (index + 1).toString().includes(searchTerm)
   );
 
-  const saveBill = () => {
+  const saveBill = async () => {
     const bills = getData("bills") || [];
+
+    const billData = {
+      items: selected,
+      total,
+    };
+
+    try {
+      await billService.createBill(billData);
+    } catch (error) {
+      console.error("Unable to save bill to backend:", error);
+    }
 
     bills.push({
       billNo,

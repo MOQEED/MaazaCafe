@@ -1,12 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
+import { authService } from "../../services/auth";
 import './index.css'
 
 export default function Navbar({ setIsAuth }) {
   const nav = useNavigate();
 
   const logout = () => {
-    localStorage.removeItem("isAuth");
-    localStorage.removeItem("ownerAuth");
+    authService.logout();
     setIsAuth(false);
     nav("/");
   };

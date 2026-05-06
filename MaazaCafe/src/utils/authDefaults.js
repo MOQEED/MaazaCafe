@@ -1,7 +1,14 @@
 /** Bill date string → same day key used in Reports grouping */
 export function billDayKey(dateStr) {
   if (!dateStr || typeof dateStr !== "string") return "";
-  return dateStr.split(",")[0].trim();
+
+  const firstPart = dateStr.split(",")[0].trim();
+  if (firstPart.includes("/")) return firstPart;
+  if (firstPart.includes("T")) {
+    const [isoDate] = firstPart.split("T");
+    return isoDate.split("-").reverse().join("/");
+  }
+  return firstPart;
 }
 
 /** Default credentials (localStorage) — run once on app load; migrates legacy staff* keys */

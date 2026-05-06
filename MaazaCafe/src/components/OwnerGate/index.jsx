@@ -1,14 +1,29 @@
 import { useState, useEffect } from "react";
+import { authService } from "../../services/auth";
 import "./index.css";
 
 export default function OwnerGate({ children }) {
   const [u, setU] = useState("");
   const [p, setP] = useState("");
   const [err, setErr] = useState("");
-  const [ok, setOk] = useState(() => localStorage.getItem("ownerAuth") === "true");
+  const [ok, setOk] = useState(false);
 
   useEffect(() => {
-    setOk(localStorage.getItem("ownerAuth") === "true");
+    const checkRole = async () => {
+      try {
+        const profile = await authService.getProfile();
+        if (profile.role === "owner" || profile.role === "admin") {
+          setOk(true);
+          return;
+        }
+      } catch {
+        // fallback to legacy ownerAuth if backend not available or token invalid
+      }
+
+      setOk(localStorage.getItem("ownerAuth") === "true");
+    };
+
+    checkRole();
   }, []);
 
   const login = () => {

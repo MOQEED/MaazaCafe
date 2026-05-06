@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { printContent } from "../../utils/pdf";
 import { getData, saveData } from "../../utils/storage";
 import { billDayKey } from "../../utils/authDefaults";
+import { billService } from "../../services/bills";
 import * as XLSX from "xlsx";
 import "./index.css";
 
@@ -10,10 +11,19 @@ export default function Reports() {
   const [selectedDate, setSelectedDate] = useState("");
 
   useEffect(() => {
-    setBills(getData("bills") || []);
+    const loadBills = async () => {
+      try {
+        const remoteBills = await billService.getBills();
+        setBills(remoteBills);
+      } catch (error) {
+        setBills(getData("bills") || []);
+      }
+    };
+
+    loadBills();
   }, []);
 
-  const deleteBillsForDate = (dateKey) => {
+  const deleteBillsForDate = async (dateKey) => {
     if (
       !window.confirm(
         `Delete all bills for ${dateKey}? This removes that day's sales data and cannot be undone.`
@@ -21,8 +31,19 @@ export default function Reports() {
     ) {
       return;
     }
-    const all = getData("bills") || [];
-    const next = all.filter((bill) => billDayKey(bill.date) !== dateKey);
+
+    const next = bills.filter((bill) => billDayKey(bill.date) !== dateKey);
+
+    for (const bill of bills) {
+      if (billDayKey(bill.date) === dateKey && bill.id) {
+        try {
+          await billService.deleteBill(bill.id);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
+
     saveData("bills", next);
     setBills(next);
   };

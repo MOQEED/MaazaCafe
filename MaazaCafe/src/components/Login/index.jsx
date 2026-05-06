@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ensureAuthDefaults } from "../../utils/authDefaults";
+import { authService } from "../../services/auth";
 import "./index.css";
 
 export default function Login({ setIsAuth }) {
@@ -9,19 +10,28 @@ export default function Login({ setIsAuth }) {
   const [err, setErr] = useState("");
   const nav = useNavigate();
 
-  const login = () => {
+  const login = async () => {
     ensureAuthDefaults();
-    const adminUser = localStorage.getItem("adminUser");
-    const adminPass = localStorage.getItem("adminPass");
 
     if (!u || !p) return setErr("All fields required");
 
-    if (u === adminUser && p === adminPass) {
-  localStorage.setItem("isAuth", "true");   // ✅ ADD THIS
-  setIsAuth(true);
-  nav("/menu");
-}else {
-      setErr("Invalid credentials");
+    try {
+      await authService.login(u, p);
+      setIsAuth(true);
+      nav("/menu");
+      return;
+    } catch (error) {
+      const adminUser = localStorage.getItem("adminUser");
+      const adminPass = localStorage.getItem("adminPass");
+
+      if (u === adminUser && p === adminPass) {
+        localStorage.setItem("isAuth", "true");
+        setIsAuth(true);
+        nav("/menu");
+        return;
+      }
+
+      setErr(error.message || "Invalid credentials");
     }
   };
 
