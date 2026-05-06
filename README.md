@@ -204,9 +204,9 @@ This repository includes a `render.yaml` configuration for easy deployment on Re
 - First deployment may take a few minutes
 - Free tier has usage limits; upgrade for production
 
-### Deploy to Railway
+### Deploy to Railway (Multi-Service Setup)
 
-This repository includes `railway.toml` files for backend and frontend deployment on Railway.
+Railway requires separate services for frontend and backend. Here's the best way to deploy both in one Railway project:
 
 #### Steps:
 
@@ -214,33 +214,45 @@ This repository includes `railway.toml` files for backend and frontend deploymen
 
 2. **Create Railway Account**: Sign up at https://railway.app
 
-3. **Connect Repository**:
-   - Go to Dashboard > New Project > Deploy from GitHub repo
+3. **Create Project**:
+   - Go to Dashboard > New Project > Empty Project
+   - Name it "Maaza Cafe"
+
+4. **Add Backend Service**:
+   - In your project, click "Add Service" > "GitHub Repo"
    - Select `MOQEED/MaazaCafe`
+   - Set Root Directory: `backend`
+   - Railway will use `backend/railway.toml` for config
 
-4. **Deploy Services**:
-   - Railway will detect multiple services (backend and frontend)
-   - Or manually create two services:
-     - Backend: Point to `backend/` folder
-     - Frontend: Point to `MaazaCafe/` folder
+5. **Add Frontend Service**:
+   - Click "Add Service" > "GitHub Repo" again
+   - Select `MOQEED/MaazaCafe`
+   - Set Root Directory: `MaazaCafe`
+   - Railway will use `MaazaCafe/railway.toml` for config
 
-5. **Configure Environment Variables**:
-   - Backend service:
+6. **Configure Environment Variables**:
+   - **Backend Service**:
      - `MONGO_URL`: Your MongoDB Atlas connection string
      - `DATABASE_NAME`: `maaza_cafe`
      - `SECRET_KEY`: A secure random string
-   - Frontend service:
-     - `REACT_APP_BACKEND_URL`: The Railway URL of your backend service
+   - **Frontend Service**:
+     - `REACT_APP_BACKEND_URL`: The Railway URL of your backend service (e.g., `https://maaza-cafe-backend.railway.app`)
 
-6. **Deploy**: Railway will build and deploy automatically
+7. **Deploy**: Both services will build and deploy automatically
 
-7. **Access Your App**:
-   - Frontend: The Railway-generated URL
-   - Backend API: The backend Railway URL
+8. **Access Your App**:
+   - Frontend: The Railway URL for the frontend service
+   - Backend API: The Railway URL for the backend service
 
 #### Notes:
-- Update `REACT_APP_BACKEND_URL` in frontend service with the actual backend URL
+- Both services are in the same Railway project for easy management
+- Update `REACT_APP_BACKEND_URL` in frontend service after backend deploys
 - Railway provides a free tier for testing
+- Services can communicate internally via Railway's private networking
+
+### Recommended: Use Render for Simpler Multi-Service
+
+If you prefer one-click deployment, use Render with the included `render.yaml` - it handles both services automatically.
 
 ### Alternative: Deploy Separately
 
