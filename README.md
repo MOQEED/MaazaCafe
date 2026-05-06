@@ -172,28 +172,43 @@ Use the following credentials after running `init_db.py`:
 
 ## Deployment
 
-### Option 1: Deploy backend and frontend separately
+### Deploy to Render (Recommended)
 
-- Backend: deploy on Render, Railway, Fly.io, or a VPS
-- Frontend: deploy on Vercel, Netlify, or GitHub Pages
+This repository includes a `render.yaml` configuration for easy deployment on Render.
 
-The backend must be accessible via HTTPS for production use.
+#### Steps:
 
-### Option 2: Deploy backend and frontend together
+1. **Push to GitHub**: Ensure your code is pushed to `https://github.com/MOQEED/MaazaCafe.git`
 
-Use a platform that supports full-stack apps like Render or Railway.
+2. **Create Render Account**: Sign up at https://render.com
 
-Steps:
+3. **Connect Repository**:
+   - Go to Dashboard > New > Blueprint
+   - Connect your GitHub repo: `MOQEED/MaazaCafe`
+   - Render will detect the `render.yaml` file
 
-1. Push repository to GitHub: `https://github.com/MOQEED/MaazaCafe.git`
-2. Create a new app on Render/Railway.
-3. Set backend build commands:
-   - `pip install -r requirements.txt`
-   - `uvicorn app.main:app --host 0.0.0.0 --port 8000`
-4. Set frontend build commands inside `MaazaCafe`:
-   - `npm install`
-   - `npm run build`
-5. Update the frontend to call the deployed backend URL.
+4. **Configure Environment Variables**:
+   - For the backend service, set:
+     - `MONGO_URL`: Your MongoDB Atlas connection string
+     - `DATABASE_NAME`: `maaza_cafe`
+     - `SECRET_KEY`: A secure random string
+
+5. **Deploy**: Click "Create Blueprint" - Render will deploy both services
+
+6. **Access Your App**:
+   - Frontend: The generated URL (e.g., `https://maaza-cafe-frontend.onrender.com`)
+   - Backend API: The backend URL (e.g., `https://maaza-cafe-backend.onrender.com`)
+
+#### Notes:
+- The frontend automatically connects to the backend via environment variables
+- First deployment may take a few minutes
+- Free tier has usage limits; upgrade for production
+
+### Alternative: Deploy Separately
+
+- **Backend**: Deploy FastAPI on Render, Railway, or Fly.io
+- **Frontend**: Deploy React on Vercel or Netlify
+- Update `MaazaCafe/src/config.js` with the deployed backend URL
 
 ---
 
