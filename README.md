@@ -172,9 +172,9 @@ Use the following credentials after running `init_db.py`:
 
 ## Deployment
 
-### Deploy to Render (Recommended)
+### Deploy to Render (Single Link - Recommended)
 
-This repository includes a `render.yaml` configuration for easy deployment on Render.
+This repository includes a `render.yaml` configuration for full-stack deployment with one URL.
 
 #### Steps:
 
@@ -188,25 +188,26 @@ This repository includes a `render.yaml` configuration for easy deployment on Re
    - Render will detect the `render.yaml` file
 
 4. **Configure Environment Variables**:
-   - For the backend service, set:
+   - Set:
      - `MONGO_URL`: Your MongoDB Atlas connection string
      - `DATABASE_NAME`: `maaza_cafe`
      - `SECRET_KEY`: A secure random string
 
-5. **Deploy**: Click "Create Blueprint" - Render will deploy both services
+5. **Deploy**: Click "Create Blueprint" - Render will build and deploy both frontend and backend
 
 6. **Access Your App**:
-   - Frontend: The generated URL (e.g., `https://maaza-cafe-frontend.onrender.com`)
-   - Backend API: The backend URL (e.g., `https://maaza-cafe-backend.onrender.com`)
+   - Single URL: The generated URL serves both the React frontend and FastAPI backend API
+   - Frontend: `https://your-app.onrender.com`
+   - Backend API: `https://your-app.onrender.com/docs` (Swagger UI)
 
 #### Notes:
-- The frontend automatically connects to the backend via environment variables
-- First deployment may take a few minutes
+- One deployment link for the entire application
+- Frontend and backend communicate on the same domain
 - Free tier has usage limits; upgrade for production
 
-### Deploy to Railway (Multi-Service Setup)
+### Deploy to Railway (Single Link)
 
-Railway requires separate services for frontend and backend. Here's the best way to deploy both in one Railway project:
+This repository includes a root `railway.toml` for full-stack deployment with one URL.
 
 #### Steps:
 
@@ -215,42 +216,25 @@ Railway requires separate services for frontend and backend. Here's the best way
 2. **Create Railway Account**: Sign up at https://railway.app
 
 3. **Create Project**:
-   - Go to Dashboard > New Project > Empty Project
-   - Name it "Maaza Cafe"
-
-4. **Add Backend Service**:
-   - In your project, click "Add Service" > "GitHub Repo"
+   - Go to Dashboard > New Project > Deploy from GitHub repo
    - Select `MOQEED/MaazaCafe`
-   - Set Root Directory: `backend`
-   - Railway will use `backend/railway.toml` for config
 
-5. **Add Frontend Service**:
-   - Click "Add Service" > "GitHub Repo" again
-   - Select `MOQEED/MaazaCafe`
-   - Set Root Directory: `MaazaCafe`
-   - Railway will use `MaazaCafe/railway.toml` for config
+4. **Configure Environment Variables**:
+   - `MONGO_URL`: Your MongoDB Atlas connection string
+   - `DATABASE_NAME`: `maaza_cafe`
+   - `SECRET_KEY`: A secure random string
 
-6. **Configure Environment Variables**:
-   - **Backend Service**:
-     - `MONGO_URL`: Your MongoDB Atlas connection string
-     - `DATABASE_NAME`: `maaza_cafe`
-     - `SECRET_KEY`: A secure random string
-   - **Frontend Service**:
-     - `REACT_APP_BACKEND_URL`: The Railway URL of your backend service (e.g., `https://maaza-cafe-backend.railway.app`)
+5. **Deploy**: Railway will build both frontend and backend, then deploy
 
-7. **Deploy**: Both services will build and deploy automatically
-
-8. **Access Your App**:
-   - Frontend: The Railway URL for the frontend service
-   - Backend API: The Railway URL for the backend service
+6. **Access Your App**:
+   - Single URL: The Railway URL serves both the React frontend and FastAPI backend API
+   - Frontend: `https://your-project.railway.app`
+   - Backend API: `https://your-project.railway.app/docs` (Swagger UI)
 
 #### Notes:
-- Both services are in the same Railway project for easy management
-- Update `REACT_APP_BACKEND_URL` in frontend service after backend deploys
+- One deployment link for the entire application
+- Frontend and backend communicate on the same domain
 - Railway provides a free tier for testing
-- Services can communicate internally via Railway's private networking
-
-### Recommended: Use Render for Simpler Multi-Service
 
 If you prefer one-click deployment, use Render with the included `render.yaml` - it handles both services automatically.
 

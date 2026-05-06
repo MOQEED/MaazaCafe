@@ -29,6 +29,12 @@ app.include_router(menu.router, prefix="/menu", tags=["Menu"])
 app.include_router(bills.router, prefix="/bills", tags=["Bills"])
 app.include_router(cash.router, prefix="/cash", tags=["Cash"])
 
+# Mount static files (frontend build) - serves the React app
+from fastapi.staticfiles import StaticFiles
+import os
+if os.path.exists("static"):
+    app.mount("/", StaticFiles(directory="static", html=True), name="static")
+
 @app.get("/")
 async def root():
     return {"message": "Welcome to Maaza Cafe Backend API"}

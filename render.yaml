@@ -1,26 +1,14 @@
 services:
-  - name: maaza-cafe-backend
-    source: backend/
+  - name: maaza-cafe-fullstack
+    source: .
     type: web
-    buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    buildCommand: cd MaazaCafe && npm install && npm run build && cp -r dist ../backend/static && cd ../backend && pip install -r requirements.txt
+    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: MONGO_URL
         value: mongodb://localhost:27017  # Replace with your MongoDB Atlas URL
       - key: DATABASE_NAME
         value: maaza_cafe
       - key: SECRET_KEY
-        value: your-super-secret-key-change-this-in-production
-
-  - name: maaza-cafe-frontend
-    source: MaazaCafe/
-    type: web
-    buildCommand: npm install && npm run build
-    startCommand: npx serve -s dist -l $PORT
-    envVars:
-      - key: REACT_APP_BACKEND_URL
-        fromService:
-          type: web
-          name: maaza-cafe-backend
-          property: hostport</content>
+        value: your-super-secret-key-change-this-in-production</content>
 <parameter name="filePath">c:\Users\91901\Desktop\react\MaazaCafe\render.yaml
