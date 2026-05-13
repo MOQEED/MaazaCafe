@@ -46,11 +46,12 @@ export default function Cash() {
 
     try {
       const created = await cashService.createCashEntry(newEntry);
-      setData([...data, { ...created, id: created.id || Date.now() }]);
+      setData([...data, { ...created, id: created.id || Date.now().toString() }]);
     } catch (error) {
+      console.error("Cash API Error (using fallback):", error);
       setData([
         ...data,
-        { ...newEntry, id: Date.now() },
+        { ...newEntry, id: Date.now().toString() },
       ]);
     }
 

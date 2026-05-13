@@ -13,16 +13,22 @@ export const menuService = {
   },
 
   async createMenuItem(item) {
-    const response = await fetch(`${API_BASE_URL}/menu`, {
-      method: 'POST',
-      headers: authHeaders(),
-      body: JSON.stringify(item),
-    });
-    if (!response.ok) {
-      const err = await response.json().catch(() => null);
-      throw new Error(err?.detail || 'Failed to create menu item');
+    try {
+      const response = await fetch(`${API_BASE_URL}/menu`, {
+        method: 'POST',
+        headers: authHeaders(),
+        body: JSON.stringify(item),
+      });
+      if (!response.ok) {
+        const err = await response.json().catch(() => null);
+        console.error('Menu API error:', response.status, err);
+        throw new Error(err?.detail || 'Failed to create menu item');
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Menu service error:', error);
+      throw error;
     }
-    return await response.json();
   },
 
   async updateMenuItem(id, item) {

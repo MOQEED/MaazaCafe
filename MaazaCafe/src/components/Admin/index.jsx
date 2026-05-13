@@ -57,7 +57,9 @@ export default function Admin() {
       const createdItem = await menuService.createMenuItem(newItem);
       setItems([...items, { ...createdItem, qty: 0 }]);
     } catch (error) {
-      setItems([...items, { ...newItem, qty: 0 }]);
+      console.error("API Error (using fallback):", error);
+      const fallbackItem = { ...newItem, id: Date.now().toString(), qty: 0 };
+      setItems([...items, fallbackItem]);
     }
 
     setName("");
@@ -75,7 +77,7 @@ export default function Admin() {
       try {
         await menuService.deleteMenuItem(itemToDelete.id);
       } catch (error) {
-        console.error(error);
+        console.error("Delete API Error:", error);
       }
     }
 

@@ -29,6 +29,24 @@ app.include_router(menu.router, prefix="/menu", tags=["Menu"])
 app.include_router(bills.router, prefix="/bills", tags=["Bills"])
 app.include_router(cash.router, prefix="/cash", tags=["Cash"])
 
+@app.get("/health")
+async def health_check():
+    """Check if backend is running and MongoDB is connected"""
+    from app.database import get_database
+    try:
+        db = get_database()
+        # Try a simple database operation
+        await db.command('ping')
+        return {
+            "status": "healthy",
+            "message": "Backend is running and MongoDB is connected"
+        }
+    except Exception as e:
+        return {
+            "status": "unhealthy",
+            "message": f"MongoDB connection failed: {str(e)}"
+        }
+
 # Mount static files (frontend build) - serves the React app
 from fastapi.staticfiles import StaticFiles
 import os
