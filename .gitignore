@@ -11,6 +11,9 @@ MaazaCafe/dist/
 MaazaCafe/.env
 MaazaCafe/.DS_Store
 
+# Backend build output
+backend/static/
+
 # General
 *.log
 *.pyc

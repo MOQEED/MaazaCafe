@@ -129,9 +129,9 @@ The frontend will run at:
 
 ### 3. Connect frontend to backend
 
-The React application is configured to call the backend API from the `MaazaCafe` folder.
+For local development, the React application will call the backend at `http://localhost:8000` while Vite is running on `http://localhost:5173`.
 
-If your backend is running locally, make sure it is available at `http://localhost:8000`.
+For production deployment using the single-link Render/Railway setup, the frontend is served from the same backend origin and automatically calls the API on the same domain.
 
 ---
 
