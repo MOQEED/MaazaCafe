@@ -1,5 +1,5 @@
-# Build the frontend with Node 18
-FROM node:18-bullseye AS frontend
+# Build the frontend with Node 22
+FROM node:22-bullseye AS frontend
 WORKDIR /app
 COPY MaazaCafe/package.json MaazaCafe/package-lock.json* ./MaazaCafe/
 COPY MaazaCafe/ ./MaazaCafe/
