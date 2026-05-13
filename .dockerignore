@@ -1,0 +1,10 @@
+node_modules
+*.log
+*.pyc
+__pycache__
+.DS_Store
+.env
+backend/.venv
+backend/__pycache__
+MaazaCafe/dist
+MaazaCafe/node_modules

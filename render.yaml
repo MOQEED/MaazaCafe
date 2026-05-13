@@ -1,9 +1,7 @@
 services:
   - name: maaza-cafe-fullstack
-    source: .
     type: web
-    buildCommand: cd MaazaCafe && npm install && npm run build && cp -r dist ../backend/static && cd ../backend && pip install -r requirements.txt
-    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    dockerfilePath: Dockerfile
     envVars:
       - key: MONGO_URL
         value: mongodb://localhost:27017  # Replace with your MongoDB Atlas URL

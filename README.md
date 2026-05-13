@@ -193,7 +193,7 @@ This repository includes a `render.yaml` configuration for full-stack deployment
      - `DATABASE_NAME`: `maaza_cafe`
      - `SECRET_KEY`: A secure random string
 
-5. **Deploy**: Click "Create Blueprint" - Render will build and deploy both frontend and backend
+5. **Deploy**: Click "Create Blueprint" - Render will build the Docker image using `Dockerfile` and deploy both frontend and backend in one service.
 
 6. **Access Your App**:
    - Single URL: The generated URL serves both the React frontend and FastAPI backend API
@@ -201,6 +201,7 @@ This repository includes a `render.yaml` configuration for full-stack deployment
    - Backend API: `https://your-app.onrender.com/docs` (Swagger UI)
 
 #### Notes:
+- This setup uses Docker to force Python 3.11 and Node 18, avoiding Render's default Python 3.14 issue
 - One deployment link for the entire application
 - Frontend and backend communicate on the same domain
 - Free tier has usage limits; upgrade for production
